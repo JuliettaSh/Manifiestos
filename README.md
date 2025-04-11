@@ -19,12 +19,12 @@ Iniciar Minikube con un perfil personalizado y habilita metrics-server:
 * minikube start -p 0311at --addons=metrics-server
 # 3. Aplicar los manifiestos
 Dentro del repositorio de manifiestos, aplicar los recursos en el siguiente orden:
-* kubectl apply -f namespace.yaml
-* kubectl apply -f configmap.yaml
-* kubectl apply -f pv.yaml
-* kubectl apply -f pvc.yaml
-* kubectl apply -f deployment.yaml
-* kubectl apply -f service.yaml
+* kubectl apply -f namespace.yml
+* kubectl apply -f configmap.yml
+* kubectl apply -f persistenceVolume.yml
+* kubectl apply -f persistenceVolumeClaim.yml
+* kubectl apply -f deployment.yml
+* kubectl apply -f service.yml
 ***
   Nota: Tener en cuenta de estar en el contexto del namespace correcto.
 # 4. Exponer el servicio
