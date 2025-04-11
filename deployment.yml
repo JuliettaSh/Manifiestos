@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 0311AT-deployment
+  name: 0311at-deployment
 spec:
   replicas: 1
   selector:
@@ -33,4 +33,4 @@ spec:
       volumes:
       - name: html-volume
         persistentVolumeClaim:
-          claimName: 0311AT-pvc
+          claimName: 0311at-pvc

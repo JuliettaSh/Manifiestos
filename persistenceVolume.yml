@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: 0311AT-pv
+  name: 0311at-pv
 spec:
   capacity:
     storage: 1Gi

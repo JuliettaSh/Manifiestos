@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: 0311AT-service
-  namespace: 0211AT-web
+  namespace: 0311at-web
 spec:
   selector:
     app: webapp
