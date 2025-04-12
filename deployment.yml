@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 0311at-deployment
+  name: webapp-deployment
   namespace: 0311at-web
 spec:
   replicas: 1
@@ -13,16 +13,6 @@ spec:
       labels:
         app: webapp
     spec:
-      initContainers:
-      - name: git-clone
-        image: alpine/git
-        command:
-          - sh
-          - -c
-          - git clone https://github.com/JuliettaSh/static-website.git /mnt/html
-        volumeMounts:
-        - name: html-volume
-          mountPath: /mnt/html
       containers:
       - name: nginx
         image: nginx
@@ -31,7 +21,35 @@ spec:
         volumeMounts:
         - name: html-volume
           mountPath: /usr/share/nginx/html
+
+      - name: gitsync
+        image: k8s.gcr.io/git-sync/git-sync:v3.6.6
+        env:
+        - name: GIT_SYNC_REPO
+          value: "https://github.com/JuliettaSh/static-website.git" 
+        - name: GIT_SYNC_BRANCH
+          value: "master"
+        - name: GIT_SYNC_ROOT
+          value: "/git"
+        - name: GIT_SYNC_DEST
+          value: "static-website"
+        - name: GIT_SYNC_WAIT
+          value: "10"   
+        volumeMounts:
+        - name: git-volume
+          mountPath: /git
+
+      - name: copy-static-website
+        image: busybox
+        command: ['sh', '-c', 'while true; do sleep 10; cp -rf /git/static-website/* /usr/share/nginx/html/; done']
+        volumeMounts:
+        - name: git-volume
+          mountPath: /git
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+
       volumes:
+      - name: git-volume
+        emptyDir: {}
       - name: html-volume
-        persistentVolumeClaim:
-          claimName: 0311at-pvc
+        emptyDir: {}
