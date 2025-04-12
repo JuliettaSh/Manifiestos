@@ -11,7 +11,9 @@ ________________________________________
 Pasos para reproducir el entorno
 # 1. Clonar los repositorios
 ## Clona el repositorio de la página web pero en este usando tu clave SSH si quieres hacer un push y que los cambios se actualicen:
-* git clone git@github.com:JuliettaSh/Manifiestos.git
+***
+Tener en cuenta que se debe tener ya una key en github para este paso.
+* git clone git@github.com:JuliettaSh/static-website.git
 * Te va a pedir la frase de tu contraseña
 * Si se quiere hacer un cambio se deben seguir los comandos de git add, git commit y git push (que te va a pedir la contraseña)
 ## Clona el repositorio de manifiestos en una carpeta:
