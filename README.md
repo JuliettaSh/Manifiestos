@@ -10,8 +10,10 @@ Requisitos
 ________________________________________
 Pasos para reproducir el entorno
 # 1. Clonar los repositorios
-## Clona el repositorio de la página web:
-* git clone https://github.com/JuliettaSh/static-website.git
+## Clona el repositorio de la página web pero en este usando tu clave SSH si quieres hacer un push y que los cambios se actualicen:
+* git clone git@github.com:JuliettaSh/Manifiestos.git
+* Te va a pedir la frase de tu contraseña
+* Si se quiere hacer un cambio se deben seguir los comandos de git add, git commit y git push (que te va a pedir la contraseña)
 ## Clona el repositorio de manifiestos:
 * git clone https://github.com/JuliettaSh/Manifiestos.git
 # 2. Inicializar Minikube
@@ -22,6 +24,7 @@ Dentro del repositorio de manifiestos, aplicar los recursos en el siguiente orde
 * kubectl apply -f namespace.yml
 * kubectl apply -f configmap.yml
 * kubectl apply -f persistenceVolume.yml
+* kubectl apply -f gitPVC.yml
 * kubectl apply -f persistenceVolumeClaim.yml
 * kubectl apply -f deployment.yml
 * kubectl apply -f service.yml
@@ -32,3 +35,6 @@ Para exponer el servicio creado y acceder a la página web, ejecutar el siguient
 * minikube service service-0311 -p 0311at -n 0311at-web
 ***
   Esto abrirá el sitio web en el navegador localmente.
+# 5. Añadir cambios a la pagina
+Si se hizo un cambio no olvidarse de hacer el git push 
+* una vez en el navegador esperamos a que pasen unos segundos y actualizamos la página, los cambios deberian verse.
