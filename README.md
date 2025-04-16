@@ -9,18 +9,36 @@ Requisitos
 * Docker instalado en tu máquina.
 ________________________________________
 Pasos para reproducir el entorno
-# 1. Clonar los repositorios
-## Clona el repositorio de la página web pero en este usando tu clave SSH si quieres hacer un push y que los cambios se actualicen:
+# 1. Hacé un fork del repositorio:
 ***
-Tener en cuenta que se debe tener ya una key en github para este paso.
-* git clone git@github.com:JuliettaSh/static-website.git
-* Te va a pedir la frase de tu contraseña
-* Si se quiere hacer un cambio se deben seguir los comandos de git add, git commit y git push (que te va a pedir la contraseña)
+Hacé clic en el botón “Fork” arriba a la derecha del repositorio: https://github.com/JuliettaSh/static-website.git
+## Clona el repositorio de la página web para hacer que los cambios se actualicen:
+***
+* git clone git@github.com:TU_USUARIO/static-website.git
+* Si se quiere hacer un cambio se deben seguir los comandos de git add, git commit y git push a ese repositorio.
 ## Clona el repositorio de manifiestos en una carpeta:
 * git clone https://github.com/JuliettaSh/Manifiestos.git
 # 2. Inicializar Minikube
 Iniciar Minikube con un perfil personalizado y habilita metrics-server:
 * minikube start -p 0311at --addons=metrics-server
+# Actualizar el Deployment (importante)
+Antes de aplicar los manifiestos en Kubernetes, necesitas actualizar el repositorio de la página web en el archivo deployment.yml con la nueva URL del repositorio que hiciste fork.
+* Ve a la carpeta del repositorio de manifiestos: cd Manifiestos (donde lo hayas clonado)
+* Abre el archivo deployment.yml y localiza la línea que contiene la URL del repositorio en el campo GIT_SYNC_REPO:
+***
+- name: gitsync
+  image: k8s.gcr.io/git-sync/git-sync:v3.6.6
+  env:
+  - name: GIT_SYNC_REPO
+    value: "https://github.com/JuliettaSh/static-website.git"  # Esta URL debe cambiar
+* Cambia la URL para apuntar a tu propio repositorio de GitHub (el fork o tu repositorio):
+***
+- name: gitsync
+  image: k8s.gcr.io/git-sync/git-sync:v3.6.6
+  env:
+  - name: GIT_SYNC_REPO
+    value: "https://github.com/TU_USUARIO/static-website.git"
+* Guarda los cambios y aplica los manifiestos en Kubernetes.
 # 3. Aplicar los manifiestos
 Dentro del repositorio de manifiestos haciendo: cd Manifiestos, aplicar los recursos en el siguiente orden:
 * kubectl apply -f namespace.yml
@@ -38,5 +56,5 @@ Para exponer el servicio creado y acceder a la página web, ejecutar el siguient
 ***
   Esto abrirá el sitio web en el navegador localmente.
 # 5. Añadir cambios a la pagina
-Si se hizo un cambio no olvidarse de hacer el git push (añadiendo la contraseña)
+Si se hizo un cambio no olvidarse de hacer el git push a tu repositorio forkeado.
 * una vez en el navegador esperamos a que pasen unos segundos y refrescamos la página, los cambios deberian verse.
